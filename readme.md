@@ -1,6 +1,6 @@
-# Custom Memory Allocator for HFT
+# Low Latency Memory Allocator
 
-This project implements a high-performance **Custom Memory Allocator** in C++, designed specifically for low-latency / high-frequency trading (HFT) systems where the same types of objects (like orders or market data events) are repeatedly created and destroyed.
+This project implements a high-performance **Low Latency Memory Allocator** in C++, designed specifically for high-frequency trading (HFT) systems where the same types of objects (like orders or market data events) are repeatedly created and destroyed.
 
 By pre-allocating a large contiguous block of memory and managing it with a free-list, we avoid the heavy latency spikes associated with frequent `new/delete` heap allocations in the hot path. 
 
