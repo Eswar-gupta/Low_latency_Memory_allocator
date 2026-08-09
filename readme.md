@@ -6,8 +6,8 @@ By pre-allocating a large contiguous block of memory and managing it with a free
 
 The project includes:
 1. **`FixedBlockPool`**: A raw memory manager using $O(1)$ free-list logic.
-2. **`ObjectPool<T>`**: A type-safe wrapper using placement new.
-3. **`PoolAllocator<T>`**: An STL-compatible allocator adapter to accelerate node-based STL containers.
+2. **`ObjectPool<T>`**: A type-safe wrapper using placement new. (Placement new is a C++ technique that constructs an object at a specific, pre-allocated memory address. This avoids the latency of dynamic heap allocation while still ensuring proper initialization and destruction of objects).
+3. **`PoolAllocator<T>`**: An STL-compatible allocator adapter to accelerate node-based STL containers. (STL-compatible means it can be seamlessly plugged into standard C++ containers like `std::list` or `std::map`. A custom allocator is needed here because the default STL allocator requests memory from the system heap for every single node it creates, which is very slow. Our allocator replaces that default behavior, instead serving memory from our high-speed $O(1)$ custom pool).
 
 ---
 
