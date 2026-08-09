@@ -16,7 +16,7 @@ The project includes:
 ### 1. Full Object Lifecycle (Create-Edit-Destroy)
 This benchmark simulates creating objects, modifying them, and destroying them repeatedly. `ObjectPool` completely bypasses heap allocation in the hot path.
 
-![Full Lifecycle Comparison](/Users/eswargupta/Desktop/1Acads/HFT_Projects/Custom_Memory_allocator/results2/lifecycle_combined.png)
+![Full Lifecycle Comparison](results2/lifecycle_combined.png)
 
 **At 1,000,000 operations:**
 - **Standard Heap (`new/delete`)**: `269.551 ms`
@@ -27,7 +27,7 @@ This benchmark simulates creating objects, modifying them, and destroying them r
 ### 2. STL Data Structure Lifecycle (std::list)
 This benchmark simulates an order book maintaining a `std::list<Order>`. Standard STL lists require a new heap allocation for every node inserted. By injecting our `PoolAllocator`, node allocation drops to $O(1)$.
 
-![STL Order Book Comparison](/Users/eswargupta/Desktop/1Acads/HFT_Projects/Custom_Memory_allocator/results2/stl_order_book_combined.png)
+![STL Order Book Comparison](results2/stl_order_book_combined.png)
 
 **At 1,000,000 operations:**
 - **Default STL Allocator**: `179.446 ms`
