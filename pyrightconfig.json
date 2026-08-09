@@ -1,0 +1,21 @@
+{
+  "venvPath": ".",
+  "venv": ".venv",
+  "include": [
+    "tools"
+  ],
+  "exclude": [
+    "build",
+    ".venv",
+    ".matplotlib_cache"
+  ],
+  "pythonVersion": "3.11",
+  "typeCheckingMode": "basic",
+  "reportMissingParameterType": "none",
+  "reportUnknownParameterType": "none",
+  "reportUnknownArgumentType": "none",
+  "reportUnknownVariableType": "none",
+  "reportUnknownMemberType": "none",
+  "reportUnknownLambdaType": "none",
+  "reportMissingTypeStubs": "none"
+}

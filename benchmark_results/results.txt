@@ -1,0 +1,87 @@
+Custom allocator benchmark report
+=================================
+
+ObjectPool and PoolAllocator timings exclude pool construction/preallocation.
+This models low-latency systems where pools are warmed up before the hot path.
+For immediate/batch/lifecycle, speedup baseline is new/delete.
+For stl_order_book, speedup baseline is default STL allocation.
+
+workload            allocator                ops       time_ms         ops/sec     speedup
+------------------------------------------------------------------------------------------
+immediate           new_delete                 1         0.000        24390244        1.00
+immediate           std_allocator              1         0.000      1000000000       41.00
+immediate           object_pool                1         0.000      1000000000       41.00
+batch               new_delete                 1         0.000         8000000        1.00
+batch               std_allocator              1         0.000         6024096        0.75
+batch               object_pool                1         0.000        23809524        2.98
+lifecycle           new_delete                 1         0.000         8000000        1.00
+lifecycle           std_allocator              1         0.000         8000000        1.00
+lifecycle           object_pool                1         0.000        12048193        1.51
+stl_order_book      default_stl                1         0.000        23809524        1.00
+stl_order_book      pool_allocator             1         0.000         8000000        0.34
+immediate           new_delete                10         0.000     10000000000        1.00
+immediate           std_allocator             10         0.000       238095238        0.02
+immediate           object_pool               10         0.000       243902439        0.02
+batch               new_delete                10         0.001        20000000        1.00
+batch               std_allocator             10         0.001        20000000        1.00
+batch               object_pool               10         0.000       120481928        6.02
+lifecycle           new_delete                10         0.001        14992504        1.00
+lifecycle           std_allocator             10         0.001        18450185        1.23
+lifecycle           object_pool               10         0.000       119047619        7.94
+stl_order_book      default_stl               10         0.001        16000000        1.00
+stl_order_book      pool_allocator            10         0.000        40000000        2.50
+immediate           new_delete               100         0.000       400000000        1.00
+immediate           std_allocator            100         0.000       400000000        1.00
+immediate           object_pool              100         0.000       400000000        1.00
+batch               new_delete               100         0.004        26089225        1.00
+batch               std_allocator            100         0.004        25536261        0.98
+batch               object_pool              100         0.001       200000000        7.67
+lifecycle           new_delete               100         0.004        25529742        1.00
+lifecycle           std_allocator            100         0.004        25536261        1.00
+lifecycle           object_pool              100         0.001       184842884        7.24
+stl_order_book      default_stl              100         0.004        23529412        1.00
+stl_order_book      pool_allocator           100         0.001        72727273        3.09
+immediate           new_delete              1000         0.002       436490615        1.00
+immediate           std_allocator           1000         0.002       436490615        1.00
+immediate           object_pool             1000         0.002       470588235        1.08
+batch               new_delete              1000         0.038        26518868        1.00
+batch               std_allocator           1000         0.086        11639140        0.44
+batch               object_pool             1000         0.004       250000000        9.43
+lifecycle           new_delete              1000         0.057        17467249        1.00
+lifecycle           std_allocator           1000         0.037        27303754        1.56
+lifecycle           object_pool             1000         0.005       220215811       12.61
+stl_order_book      default_stl             1000         0.039        25532349        1.00
+stl_order_book      pool_allocator          1000         0.023        44198895        1.73
+immediate           new_delete             10000         0.023       441169983        1.00
+immediate           std_allocator          10000         0.022       461531361        1.05
+immediate           object_pool            10000         0.021       473372781        1.07
+batch               new_delete             10000         0.829        12064545        1.00
+batch               std_allocator          10000         0.624        16038492        1.33
+batch               object_pool            10000         0.095       105586586        8.75
+lifecycle           new_delete             10000         0.911        10970927        1.00
+lifecycle           std_allocator          10000         0.666        15021601        1.37
+lifecycle           object_pool            10000         0.108        92236457        8.41
+stl_order_book      default_stl            10000         1.311         7630431        1.00
+stl_order_book      pool_allocator         10000         0.443        22552135        2.96
+immediate           new_delete            100000         0.629       159066977        1.00
+immediate           std_allocator         100000         0.907       110218100        0.69
+immediate           object_pool           100000         0.579       172612297        1.09
+batch               new_delete            100000         9.098        10991578        1.00
+batch               std_allocator         100000        14.640         6830407        0.62
+batch               object_pool           100000         1.540        64945608        5.91
+lifecycle           new_delete            100000        13.476         7420347        1.00
+lifecycle           std_allocator         100000        13.512         7400988        1.00
+lifecycle           object_pool           100000         1.087        91971698       12.39
+stl_order_book      default_stl           100000        14.408         6940428        1.00
+stl_order_book      pool_allocator        100000         5.118        19538882        2.82
+immediate           new_delete           1000000         6.476       154418309        1.00
+immediate           std_allocator        1000000         7.178       139316183        0.90
+immediate           object_pool          1000000         6.705       149141497        0.97
+batch               new_delete           1000000        98.549        10147279        1.00
+batch               std_allocator        1000000       128.904         7757729        0.76
+batch               object_pool          1000000        16.746        59716645        5.88
+lifecycle           new_delete           1000000       269.551         3709877        1.00
+lifecycle           std_allocator        1000000       143.187         6983880        1.88
+lifecycle           object_pool          1000000        16.053        62293330       16.79
+stl_order_book      default_stl          1000000       179.446         5572720        1.00
+stl_order_book      pool_allocator       1000000        88.628        11283148        2.02
