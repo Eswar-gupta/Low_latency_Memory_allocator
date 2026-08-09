@@ -36,15 +36,6 @@ This benchmark simulates an order book maintaining a `std::list<Order>`. Standar
 
 ---
 
-## 💼 Resume Bullet Points
-
-If you are using this project for a software engineering or quantitative trading resume, you can use the following bullet points:
-
-* **Designed and implemented a low-latency C++ memory allocator** using fixed-size blocks and an $O(1)$ free-list, eliminating dynamic heap overhead for high-frequency object creation/destruction workflows.
-* **Developed an STL-compatible allocator adapter (`PoolAllocator<T>`)** to accelerate node-heavy structures like `std::list` by 2x, and reduced standard object lifecycle latency by over 16x (benchmarked at 1M operations).
-
----
-
 ## 🚀 How to Run the Benchmarks
 
 To compile and run the benchmark suite locally (ensure you have CMake and a C++17 compatible compiler installed):
