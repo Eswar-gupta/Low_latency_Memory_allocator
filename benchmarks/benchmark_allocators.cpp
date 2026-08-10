@@ -13,16 +13,19 @@
 #include <string>
 #include <vector>
 
-struct Order {
+struct alignas(64) Order {
     std::uint64_t id;
     std::uint64_t timestamp_ns;
-    double price;
+    std::uint32_t instrument_id;
     std::uint32_t quantity;
+    double price;
     char side;
+    std::uint8_t padding[23];
 
-    Order(std::uint64_t id, std::uint64_t timestamp_ns, double price,
-          std::uint32_t quantity, char side)
-        : id(id), timestamp_ns(timestamp_ns), price(price), quantity(quantity), side(side) {}
+    Order(std::uint64_t id, std::uint64_t timestamp_ns, std::uint32_t instrument_id,
+          std::uint32_t quantity, double price, char side)
+        : id(id), timestamp_ns(timestamp_ns), instrument_id(instrument_id),
+          quantity(quantity), price(price), side(side) {}
 };
 
 struct Result {
@@ -43,8 +46,9 @@ static Order make_order(std::size_t i) {
     return Order(
         static_cast<std::uint64_t>(i + 1),
         1'700'000'000'000'000'000ULL + static_cast<std::uint64_t>(i),
-        100.0 + static_cast<double>(i % 100) * 0.01,
+        static_cast<std::uint32_t>(i % 100),
         static_cast<std::uint32_t>((i % 1000) + 1),
+        100.0 + static_cast<double>(i % 100) * 0.01,
         (i % 2 == 0) ? 'B' : 'S'
     );
 }
@@ -52,6 +56,7 @@ static Order make_order(std::size_t i) {
 static std::uint64_t consume(const Order* order) {
     return order->id
          ^ order->timestamp_ns
+         ^ order->instrument_id
          ^ static_cast<std::uint64_t>(order->price * 100.0)
          ^ order->quantity
          ^ static_cast<std::uint64_t>(order->side);

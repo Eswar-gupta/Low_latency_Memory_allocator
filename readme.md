@@ -16,23 +16,23 @@ The project includes:
 ### 1. Full Object Lifecycle (Create-Edit-Destroy)
 This benchmark simulates creating objects, modifying them, and destroying them repeatedly. `ObjectPool` completely bypasses heap allocation in the hot path.
 
-![Full Lifecycle Comparison](results2/lifecycle_combined.png)
+![Full Lifecycle Comparison](results/lifecycle_combined.png)
 
 **At 1,000,000 operations:**
-- **Standard Heap (`new/delete`)**: `269.551 ms`
+- **Standard Heap (`new/delete`)**: `197.726 ms`
 - **Standard STL Allocator**: `160.813 ms` *(from previous run)*
-- **Custom `ObjectPool`**: `16.053 ms`
-- **Result:** `16.79x` faster than standard heap allocation.
+- **Custom `ObjectPool`**: `30.113 ms`
+- **Result:** `6.57x` faster than standard heap allocation.
 
 ### 2. STL Data Structure Lifecycle (std::list)
 This benchmark simulates an order book maintaining a `std::list<Order>`. Standard STL lists require a new heap allocation for every node inserted. By injecting our `PoolAllocator`, node allocation drops to $O(1)$.
 
-![STL Order Book Comparison](results2/stl_order_book_combined.png)
+![STL Order Book Comparison](results/stl_order_book_combined.png)
 
 **At 1,000,000 operations:**
-- **Default STL Allocator**: `179.446 ms`
-- **Custom `PoolAllocator`**: `88.628 ms`
-- **Result:** `2.02x` faster than the default STL allocator.
+- **Default STL Allocator**: `294.837 ms`
+- **Custom `PoolAllocator`**: `129.886 ms`
+- **Result:** `2.27x` faster than the default STL allocator.
 
 ---
 

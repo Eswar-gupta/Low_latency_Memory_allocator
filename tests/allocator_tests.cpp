@@ -8,11 +8,14 @@
 #include <list>
 #include <new>
 
-struct Order {
+struct alignas(64) Order {
     std::uint64_t id;
-    double price;
+    std::uint64_t timestamp_ns;
+    std::uint32_t instrument_id;
     std::uint32_t quantity;
+    double price;
     char side;
+    std::uint8_t padding[23];
 };
 
 struct LifetimeCounter {
